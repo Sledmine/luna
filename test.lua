@@ -11,16 +11,25 @@ assert(s:replace(" ", "_") == "__hello_world__")
 ---@type string[]
 local t = {"a", "b", "c"}
 
-local t2 = table.copy(t)
-assert(t2[1] == t[1])
+local copied = table.copy(t)
+assert(copied[1] == t[1])
 
-local i = table.indexof(t, "b")
-assert(i == 2)
+local index = table.indexof(t, "b")
+assert(index == 2)
 
-local t3 = table.flip(t)
-assert(t3["a"] == 1)
+local flipped = table.flip(t)
+assert(flipped["a"] == 1)
 
-local v = table.find(t, function(v, k) return v == "b" end)
-assert(v ~= nil)
+local found = table.find(t, function(v, k) return v == "b" end)
+assert(found ~= nil)
+
+local keys = table.keys(t)
+assert(keys[1] == 1)
+assert(keys[2] == 2)
+assert(keys[3] == 3)
+
+local filtered = table.filter(t, function(v, k) return v ~= "b" end)
+assert(filtered[1] == "a")
+assert(filtered[3] == "c")
 
 os.exit(0)

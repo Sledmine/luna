@@ -138,10 +138,49 @@ function luna.table.find(t, f)
     end
 end
 
+--- Returns a list of all keys in `t`.
+---@generic K, V
+---@param t table<K, V>
+---@return K[]
+---@nodiscard
+function luna.table.keys(t)
+    assert(t ~= nil, "table.keys: t must not be nil")
+    assert(type(t) == "table", "table.keys: t must be a table")
+    local keys = {}
+    for k in pairs(t) do
+        keys[#keys + 1] = k
+    end
+    return keys
+end
+
+--- Returns a table with all elements of `t` that satisfy the predicate `f`.
+--- 
+--- **NOTE**: It keeps original keys in the new table.
+---@generic K, V
+---@param t table<K, V>
+---@param f fun(v: V, k: K): boolean
+---@return table<K, V>
+---@nodiscard
+function luna.table.filter(t, f)
+    assert(t ~= nil, "table.filter: t must not be nil")
+    assert(type(t) == "table", "table.filter: t must be a table")
+    assert(f ~= nil, "table.filter: f must not be nil")
+    assert(type(f) == "function", "table.filter: f must be a function")
+    local filtered = {}
+    for k, v in pairs(t) do
+        if f(v, k) then
+            filtered[k] = v
+        end
+    end
+    return filtered
+end
+
 -- Add table methods to table functions
 table.copy = luna.table.copy
 table.indexof = luna.table.indexof
 table.flip = luna.table.flip
 table.find = luna.table.find
+table.keys = luna.table.keys
+table.filter = luna.table.filter
 
 return luna
