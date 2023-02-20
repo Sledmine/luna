@@ -28,6 +28,11 @@ assert(keys[1] == 1)
 assert(keys[2] == 2)
 assert(keys[3] == 3)
 
+local values = table.values(t)
+assert(values[1] == "a")
+assert(values[2] == "b")
+assert(values[3] == "c")
+
 local filtered = table.filter(t, function(v, k) return v ~= "b" end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")

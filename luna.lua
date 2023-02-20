@@ -153,6 +153,21 @@ function luna.table.keys(t)
     return keys
 end
 
+--- Returns a list of all values in `t`.
+---@generic K, V
+---@param t table<K, V>
+---@return V[]
+---@nodiscard
+function luna.table.values(t)
+    assert(t ~= nil, "table.values: t must not be nil")
+    assert(type(t) == "table", "table.values: t must be a table")
+    local values = {}
+    for _, v in pairs(t) do
+        values[#values + 1] = v
+    end
+    return values
+end
+
 --- Returns a table with all elements of `t` that satisfy the predicate `f`.
 --- 
 --- **NOTE**: It keeps original keys in the new table.
@@ -181,6 +196,7 @@ table.indexof = luna.table.indexof
 table.flip = luna.table.flip
 table.find = luna.table.find
 table.keys = luna.table.keys
+table.values = luna.table.values
 table.filter = luna.table.filter
 
 return luna
