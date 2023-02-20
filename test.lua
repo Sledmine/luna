@@ -37,4 +37,9 @@ local filtered = table.filter(t, function(v, k) return v ~= "b" end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")
 
+local hex = string.tohex("hello world")
+assert(hex == "68656c6c6f20776f726c64")
+local unhex = string.fromhex(hex)
+assert(unhex == "hello world")
+
 os.exit(0)

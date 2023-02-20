@@ -65,12 +65,36 @@ function luna.string.replace(s, pattern, replacement)
     return replaced
 end
 
+--- Return a hex encoded string.
+---@param s string
+---@return string
+---@nodiscard
+function luna.string.tohex(s)
+    assert(s ~= nil, "string.hex: s must not be nil")
+    return (s:gsub(".", function(c)
+        return string.format("%02x", string.byte(c))
+    end))
+end
+
+--- Return a hex decoded string.
+---@param s string
+---@return string
+---@nodiscard
+function luna.string.fromhex(s)
+    assert(s ~= nil, "string.fromhex: s must not be nil")
+    return (s:gsub("..", function(cc)
+        return string.char(tonumber(cc, 16))
+    end))
+end
+
 -- Add string methods to string metatable
 string.split = luna.string.split
 string.ltrim = luna.string.ltrim
 string.rtrim = luna.string.rtrim
 string.trim = luna.string.trim
 string.replace = luna.string.replace
+string.tohex = luna.string.tohex
+string.fromhex = luna.string.fromhex
 
 luna.table = {}
 
