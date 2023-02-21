@@ -87,6 +87,41 @@ function luna.string.fromhex(s)
     end))
 end
 
+--- Resturn if a string starts with a given substring.
+---@param s string
+---@param start string
+---@return boolean
+---@nodiscard
+function luna.string.startswith(s, start)
+    assert(s ~= nil, "string.startswith: s must not be nil")
+    assert(start ~= nil, "string.startswith: start must not be nil")
+    return string.sub(s, 1, string.len(start)) == start
+end
+
+--- Resturn if a string ends with a given substring.
+---@param s string
+---@param ending string
+---@return boolean
+---@nodiscard
+function luna.string.endswith(s, ending)
+    assert(s ~= nil, "string.endswith: s must not be nil")
+    assert(ending ~= nil, "string.endswith: ending must not be nil")
+    return ending == "" or string.sub(s, -string.len(ending)) == ending
+end
+
+--- Return a string with template variables replaced with values from a table.
+---@param s string
+---@param t table<string, string | number | boolean>
+---@return string
+---@nodiscard
+function luna.string.template(s, t)
+    assert(s ~= nil, "string.template: s must not be nil")
+    assert(t ~= nil, "string.template: t must not be nil")
+    return (s:gsub("{(.-)}", function(k)
+        return t[k] or ""
+    end))
+end
+
 -- Add string methods to string metatable
 string.split = luna.string.split
 string.ltrim = luna.string.ltrim
@@ -95,6 +130,9 @@ string.trim = luna.string.trim
 string.replace = luna.string.replace
 string.tohex = luna.string.tohex
 string.fromhex = luna.string.fromhex
+string.startswith = luna.string.startswith
+string.endswith = luna.string.endswith
+string.template = luna.string.template
 
 luna.table = {}
 

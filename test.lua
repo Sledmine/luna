@@ -1,5 +1,4 @@
 local luna = require "luna"
-local inspect = require "inspect"
 
 local s = "  hello world  "
 assert(s:trim() == "hello world")
@@ -37,9 +36,16 @@ local filtered = table.filter(t, function(v, k) return v ~= "b" end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")
 
-local hex = string.tohex("hello world")
+s = "hello world"
+local hex = s:tohex()
+local unhex = hex:fromhex()
 assert(hex == "68656c6c6f20776f726c64")
-local unhex = string.fromhex(hex)
 assert(unhex == "hello world")
+
+assert(s:startswith("hello"))
+assert(s:endswith("world"))
+
+assert(string.template("luna says {a} {b}", {a = "hello", b = "world"}) == "luna says hello world")
+assert(string.template("luna says {a} {b}.", {a = "hello"}) == "luna says hello .")
 
 os.exit(0)
