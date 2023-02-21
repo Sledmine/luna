@@ -2,14 +2,12 @@ local luna = {
     _VERSION = "0.0.1",
 }
 
-luna.string = {}
-
 --- Split a string into a table of substrings by `sep`.
 ---@param s string
 ---@param sep string
 ---@return string[]
 ---@nodiscard
-function luna.string.split(s, sep)
+function string.split(s, sep)
     assert(s ~= nil, "string.split: s must not be nil")
     local fields = {}
     local pattern = string.format("([^%s]+)", sep)
@@ -23,7 +21,7 @@ end
 ---@param s string
 ---@return string
 ---@nodiscard
-function luna.string.ltrim(s)
+function string.ltrim(s)
     assert(s ~= nil, "string.ltrim: s must not be nil")
     return s:match "^%s*(.-)$"
 end
@@ -32,7 +30,7 @@ end
 ---@param s string
 ---@return string
 ---@nodiscard
-function luna.string.rtrim(s)
+function string.rtrim(s)
     assert(s ~= nil, "string.rtrim: s must not be nil")
     return s:match "^(.-)%s*$"
 end
@@ -41,10 +39,10 @@ end
 ---@param s string
 ---@return string
 ---@nodiscard
-function luna.string.trim(s)
+function string.trim(s)
     assert(s ~= nil, "string.trim: s must not be nil")
     -- return s:match "^%s*(.-)%s*$"
-    return luna.string.ltrim(luna.string.rtrim(s))
+    return string.ltrim(string.rtrim(s))
 end
 
 --- Return a string with all ocurrences of `pattern` replaced with `replacement`.
@@ -55,7 +53,7 @@ end
 ---@param replacement string
 ---@return string
 ---@nodiscard
-function luna.string.replace(s, pattern, replacement)
+function string.replace(s, pattern, replacement)
     assert(s ~= nil, "string.replace: s must not be nil")
     assert(pattern ~= nil, "string.replace: pattern must not be nil")
     assert(replacement ~= nil, "string.replace: replacement must not be nil")
@@ -69,7 +67,7 @@ end
 ---@param s string
 ---@return string
 ---@nodiscard
-function luna.string.tohex(s)
+function string.tohex(s)
     assert(s ~= nil, "string.hex: s must not be nil")
     return (s:gsub(".", function(c)
         return string.format("%02x", string.byte(c))
@@ -80,7 +78,7 @@ end
 ---@param s string
 ---@return string
 ---@nodiscard
-function luna.string.fromhex(s)
+function string.fromhex(s)
     assert(s ~= nil, "string.fromhex: s must not be nil")
     return (s:gsub("..", function(cc)
         return string.char(tonumber(cc, 16))
@@ -92,7 +90,7 @@ end
 ---@param start string
 ---@return boolean
 ---@nodiscard
-function luna.string.startswith(s, start)
+function string.startswith(s, start)
     assert(s ~= nil, "string.startswith: s must not be nil")
     assert(start ~= nil, "string.startswith: start must not be nil")
     return string.sub(s, 1, string.len(start)) == start
@@ -103,7 +101,7 @@ end
 ---@param ending string
 ---@return boolean
 ---@nodiscard
-function luna.string.endswith(s, ending)
+function string.endswith(s, ending)
     assert(s ~= nil, "string.endswith: s must not be nil")
     assert(ending ~= nil, "string.endswith: ending must not be nil")
     return ending == "" or string.sub(s, -string.len(ending)) == ending
@@ -114,7 +112,7 @@ end
 ---@param t table<string, string | number | boolean>
 ---@return string
 ---@nodiscard
-function luna.string.template(s, t)
+function string.template(s, t)
     assert(s ~= nil, "string.template: s must not be nil")
     assert(t ~= nil, "string.template: t must not be nil")
     return (s:gsub("{(.-)}", function(k)
@@ -122,30 +120,16 @@ function luna.string.template(s, t)
     end))
 end
 
--- Add string methods to string metatable
-string.split = luna.string.split
-string.ltrim = luna.string.ltrim
-string.rtrim = luna.string.rtrim
-string.trim = luna.string.trim
-string.replace = luna.string.replace
-string.tohex = luna.string.tohex
-string.fromhex = luna.string.fromhex
-string.startswith = luna.string.startswith
-string.endswith = luna.string.endswith
-string.template = luna.string.template
-
-luna.table = {}
-
 --- Return a deep copy of a table.
 ---@generic T
 ---@param t T
 ---@return T
 ---@nodiscard
-function luna.table.copy(t)
+function table.copy(t)
     assert(t ~= nil, "table.copy: t must not be nil")
     local u = {}
     for k, v in pairs(t) do
-        u[k] = type(v) == "table" and luna.table.copy(v) or v
+        u[k] = type(v) == "table" and table.copy(v) or v
     end
     return setmetatable(u, getmetatable(t))
 end
@@ -156,7 +140,7 @@ end
 ---@param value V
 ---@return number?
 ---@nodiscard
-function luna.table.indexof(t, value)
+function table.indexof(t, value)
     assert(t ~= nil, "table.find: t must not be nil")
     assert(type(t) == "table", "table.find: t must be a table")
     for i, v in ipairs(t) do
@@ -172,7 +156,7 @@ end
 ---@param t table<K, V>
 ---@return table<V, K>
 ---@nodiscard
-function luna.table.flip(t)
+function table.flip(t)
     assert(t ~= nil, "table.flip: t must not be nil")
     assert(type(t) == "table", "table.flip: t must be a table")
     local u = {}
@@ -188,7 +172,7 @@ end
 ---@param f fun(v: V, k: K): boolean
 ---@return V?
 ---@nodiscard
-function luna.table.find(t, f)
+function table.find(t, f)
     assert(t ~= nil, "table.find: t must not be nil")
     assert(type(t) == "table", "table.find: t must be a table")
     assert(f ~= nil, "table.find: f must not be nil")
@@ -205,7 +189,7 @@ end
 ---@param t table<K, V>
 ---@return K[]
 ---@nodiscard
-function luna.table.keys(t)
+function table.keys(t)
     assert(t ~= nil, "table.keys: t must not be nil")
     assert(type(t) == "table", "table.keys: t must be a table")
     local keys = {}
@@ -220,7 +204,7 @@ end
 ---@param t table<K, V>
 ---@return V[]
 ---@nodiscard
-function luna.table.values(t)
+function table.values(t)
     assert(t ~= nil, "table.values: t must not be nil")
     assert(type(t) == "table", "table.values: t must be a table")
     local values = {}
@@ -238,7 +222,7 @@ end
 ---@param f fun(v: V, k: K): boolean
 ---@return table<K, V>
 ---@nodiscard
-function luna.table.filter(t, f)
+function table.filter(t, f)
     assert(t ~= nil, "table.filter: t must not be nil")
     assert(type(t) == "table", "table.filter: t must be a table")
     assert(f ~= nil, "table.filter: f must not be nil")
@@ -251,14 +235,5 @@ function luna.table.filter(t, f)
     end
     return filtered
 end
-
--- Add table methods to table functions
-table.copy = luna.table.copy
-table.indexof = luna.table.indexof
-table.flip = luna.table.flip
-table.find = luna.table.find
-table.keys = luna.table.keys
-table.values = luna.table.values
-table.filter = luna.table.filter
 
 return luna
