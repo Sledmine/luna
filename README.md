@@ -1,4 +1,6 @@
 # luna
+<img src="img/luna_logo.png" width="128" height="128" align="right" />
+
 Minimalistic, simple and easy module to extend and load util functions for Lua.
 
 ## Introduction
