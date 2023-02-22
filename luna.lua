@@ -2,6 +2,8 @@ local luna = {
     _VERSION = "0.0.1",
 }
 
+luna.string = {}
+
 --- Split a string into a table of substrings by `sep`.
 ---@param s string
 ---@param sep string
@@ -120,6 +122,19 @@ function string.template(s, t)
     end))
 end
 
+luna.string.split = string.split
+luna.string.ltrim = string.ltrim
+luna.string.rtrim = string.rtrim
+luna.string.trim = string.trim
+luna.string.replace = string.replace
+luna.string.tohex = string.tohex
+luna.string.fromhex = string.fromhex
+luna.string.startswith = string.startswith
+luna.string.endswith = string.endswith
+luna.string.template = string.template
+
+luna.table = {}
+
 --- Return a deep copy of a table.
 ---@generic T
 ---@param t T
@@ -235,5 +250,13 @@ function table.filter(t, f)
     end
     return filtered
 end
+
+luna.table.copy = table.copy
+luna.table.indexof = table.indexof
+luna.table.flip = table.flip
+luna.table.find = table.find
+luna.table.keys = table.keys
+luna.table.values = table.values
+luna.table.filter = table.filter
 
 return luna
