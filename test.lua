@@ -48,4 +48,7 @@ assert(s:endswith("world"))
 assert(string.template("luna says {a} {b}", {a = "hello", b = "world"}) == "luna says hello world")
 assert(string.template("luna says {a} {b}.", {a = "hello"}) == "luna says hello .")
 
+assert(luna.file.read("test/file.txt") == "lua is awesome!")
+assert(luna.file.write("test/file.txt", "lua is awesome!") == true)
+
 os.exit(0)

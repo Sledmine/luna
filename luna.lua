@@ -259,4 +259,36 @@ luna.table.keys = table.keys
 luna.table.values = table.values
 luna.table.filter = table.filter
 
+luna.file = {}
+
+--- Read a file as text and return its contents.
+---@param path string
+---@return string?
+---@nodiscard
+function luna.file.read(path)
+    assert(path ~= nil, "file.read: path must not be nil")
+    local file = io.open(path, "r")
+    if file then
+        local content = file:read "*a"
+        file:close()
+        return content
+    end
+end
+
+--- Write text to a file.
+---@param path string
+---@param content string
+---@return boolean
+function luna.file.write(path, content)
+    assert(path ~= nil, "file.write: path must not be nil")
+    assert(content ~= nil, "file.write: content must not be nil")
+    local file = io.open(path, "w")
+    if file then
+        file:write(content)
+        file:close()
+        return true
+    end
+    return false
+end
+
 return luna
