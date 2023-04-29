@@ -1,7 +1,7 @@
 # luna
 <img src="img/luna_logo.png" width="128" height="128" align="right" />
 
-Minimalistic, simple and easy module to extend and load util functions for Lua.
+Minimalist, simple and easy module to extend and load util functions for Lua.
 
 ## Introduction
 Luna provides a set of functions to extend the Lua language and make it more powerful and handier
@@ -27,9 +27,9 @@ Luna follows a set of simple rules to make it easy to use and understand:
 - Functional programming
 - EmmyLua annotations
 - No side effects
-- No discardable values
+- No discard values
 - No globals
 - No monkey patching
 - No dependencies
 - No iterators
-- No metatables
+- No meta tables

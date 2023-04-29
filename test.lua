@@ -36,6 +36,11 @@ local filtered = table.filter(t, function(v, k) return v ~= "b" end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")
 
+local mapped = table.map(t, function(v, k) return v .. "!" end)
+assert(mapped[1] == "a!")
+assert(mapped[2] == "b!")
+assert(mapped[3] == "c!")
+
 s = "hello world"
 local hex = s:tohex()
 local unhex = hex:fromhex()
