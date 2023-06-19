@@ -284,6 +284,21 @@ function table.map(t, f)
     return mapped
 end
 
+--- Returns a table merged from all tables passed as arguments.
+---@generic K, V
+---@vararg table<K, V>
+---@return table<K, V>
+---@nodiscard
+function table.merge(...)
+    local merged = {}
+    for _, t in ipairs { ... } do
+        for k, v in pairs(t) do
+            merged[k] = v
+        end
+    end
+    return merged
+end
+
 luna.table.copy = table.copy
 luna.table.indexof = table.indexof
 luna.table.flip = table.flip

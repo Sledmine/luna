@@ -41,6 +41,12 @@ assert(mapped[1] == "a!")
 assert(mapped[2] == "b!")
 assert(mapped[3] == "c!")
 
+local merged = table.merge({a = 1}, {b = 2}, {"test"}, {deep = {a = 1}})
+assert(merged["a"] == 1)
+assert(merged["b"] == 2)
+assert(merged[1] == "test")
+assert(merged["deep"]["a"] == 1)
+
 s = "hello world"
 local hex = s:tohex()
 local unhex = hex:fromhex()
