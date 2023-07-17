@@ -307,6 +307,7 @@ luna.table.keys = table.keys
 luna.table.values = table.values
 luna.table.filter = table.filter
 luna.table.map = table.map
+luna.table.merge = table.merge
 
 luna.file = {}
 
