@@ -5,7 +5,21 @@ assert(s:trim() == "hello world")
 assert(s:ltrim() == "hello world  ")
 assert(s:rtrim() == "  hello world")
 assert(s:replace(" ", "_") == "__hello_world__")
---assert(s:split(" ") == {"", "", "hello", "world", "", ""})
+local split = s:split(" ")
+assert(split[1] == "")
+assert(split[2] == "")
+assert(split[3] == "hello")
+assert(split[4] == "world")
+assert(split[5] == "")
+assert(split[6] == "")
+s = "hello world"
+assert(s:split(" ")[1] == "hello")
+assert(s:split(" ")[2] == "world")
+assert(s:split()[1] == "h")
+assert(s:split()[2] == "e")
+assert(s:split()[3] == "l")
+assert(s:split()[4] == "l")
+assert(s:split()[5] == "o")
 
 ---@type string[]
 local t = {"a", "b", "c"}
