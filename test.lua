@@ -5,6 +5,7 @@ assert(s:trim() == "hello world")
 assert(s:ltrim() == "hello world  ")
 assert(s:rtrim() == "  hello world")
 assert(s:replace(" ", "_") == "__hello_world__")
+
 local split = s:split(" ")
 assert(split[1] == "")
 assert(split[2] == "")
@@ -12,14 +13,21 @@ assert(split[3] == "hello")
 assert(split[4] == "world")
 assert(split[5] == "")
 assert(split[6] == "")
+
 s = "hello world"
-assert(s:split(" ")[1] == "hello")
-assert(s:split(" ")[2] == "world")
-assert(s:split()[1] == "h")
-assert(s:split()[2] == "e")
-assert(s:split()[3] == "l")
-assert(s:split()[4] == "l")
-assert(s:split()[5] == "o")
+split = s:split(" ")
+assert(split[1] == "hello")
+assert(split[2] == "world")
+
+split = s:split()
+assert(split[1] == "h")
+assert(split[2] == "e")
+assert(split[3] == "l")
+assert(split[4] == "l")
+assert(split[5] == "o")
+
+s = "^[123]?%d %u%l+ %d%d%d%d%$"
+assert(s:escapep() == "%^%[123%]%?%%d %%u%%l%+ %%d%%d%%d%%d%%%$")
 
 ---@type string[]
 local t = {"a", "b", "c"}
@@ -33,7 +41,9 @@ assert(index == 2)
 local flipped = table.flip(t)
 assert(flipped["a"] == 1)
 
-local found = table.find(t, function(v, k) return v == "b" end)
+local found = table.find(t, function(v, k)
+    return v == "b"
+end)
 assert(found ~= nil)
 
 local keys = table.keys(t)
@@ -46,11 +56,15 @@ assert(values[1] == "a")
 assert(values[2] == "b")
 assert(values[3] == "c")
 
-local filtered = table.filter(t, function(v, k) return v ~= "b" end)
+local filtered = table.filter(t, function(v, k)
+    return v ~= "b"
+end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")
 
-local mapped = table.map(t, function(v, k) return v .. "!" end)
+local mapped = table.map(t, function(v, k)
+    return v .. "!"
+end)
 assert(mapped[1] == "a!")
 assert(mapped[2] == "b!")
 assert(mapped[3] == "c!")

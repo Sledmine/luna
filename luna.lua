@@ -1,4 +1,4 @@
-local luna = {_VERSION = "1.1.0"}
+local luna = {_VERSION = "1.2.0"}
 
 luna.string = {}
 
@@ -143,6 +143,15 @@ function string.includes(s, substring)
     return string.find(s, substring, 1, true) ~= nil
 end
 
+--- Return a string with all lua pattern characters escaped.
+---@param s string
+---@return string
+---@nodiscard
+function string.escapep(s)
+    assert(s ~= nil, "string.escape: s must not be nil")
+    return (s:gsub("%%", "%%%%"):gsub("%z", "%%z"):gsub("([%^%$%(%)%.%[%]%*%+%-%?])", "%%%1"))
+end
+
 luna.string.split = string.split
 luna.string.ltrim = string.ltrim
 luna.string.rtrim = string.rtrim
@@ -154,6 +163,7 @@ luna.string.startswith = string.startswith
 luna.string.endswith = string.endswith
 luna.string.template = string.template
 luna.string.includes = string.includes
+luna.string.escapep = string.escapep
 
 luna.table = {}
 
