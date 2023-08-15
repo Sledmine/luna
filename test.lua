@@ -61,6 +61,11 @@ local filtered = table.filter(t, function(v, k)
 end)
 assert(filtered[1] == "a")
 assert(filtered[3] == "c")
+filtered = table.filter(t, function(v, k)
+    return v ~= "b"
+end, true)
+assert(filtered[1] == "a")
+assert(filtered[2] == "c")
 
 local mapped = table.map(t, function(v, k)
     return v .. "!"
