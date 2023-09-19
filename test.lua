@@ -80,6 +80,29 @@ assert(merged["b"] == 2)
 assert(merged[1] == "test")
 assert(merged["deep"]["a"] == 1)
 
+local reversed = table.reverse(t)
+assert(reversed[1] == "c")
+assert(reversed[2] == "b")
+assert(reversed[3] == "a")
+
+local slice = table.slice(t, 1, 2)
+assert(slice[1] == "a")
+assert(slice[2] == "b")
+assert(slice[3] == nil)
+
+local chunks = table.chunks({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 3)
+assert(chunks[1][1] == 1)
+assert(chunks[1][2] == 2)
+assert(chunks[1][3] == 3)
+assert(chunks[2][1] == 4)
+assert(chunks[2][2] == 5)
+assert(chunks[2][3] == 6)
+assert(chunks[3][1] == 7)
+assert(chunks[3][2] == 8)
+assert(chunks[3][3] == 9)
+assert(chunks[4][1] == 10)
+assert(chunks[4][2] == nil)
+
 s = "hello world"
 local hex = s:tohex()
 local unhex = hex:fromhex()
@@ -94,7 +117,36 @@ assert(string.template("luna says {a} {b}.", {a = "hello"}) == "luna says hello 
 
 assert(string.includes("hello world", "hello"))
 
-assert(luna.file.read("test/file.txt") == "lua is awesome!")
 assert(luna.file.write("test/file.txt", "lua is awesome!") == true)
+assert(luna.file.read("test/file.txt") == "lua is awesome!")
+assert(luna.file.exists("test/file.txt") == true)
+assert(luna.file.remove("test/file.txt") == true)
+assert(luna.file.frombytes("test/file.txt", {
+    0x6c,
+    0x75,
+    0x61,
+    0x20,
+    0x69,
+    0x73,
+    0x20,
+    0x61,
+    0x77,
+    0x65,
+    0x73,
+    0x6f,
+    0x6d,
+    0x65,
+    0x21
+}) == true)
+assert(luna.file.tobytes("test/file.txt")[1] == 0x6c)
+
+assert(luna.bool("true") == true)
+assert(luna.bool("false") == false)
+assert(luna.bool("1") == true)
+assert(luna.bool("0") == false)
+assert(luna.bool(1) == true)
+assert(luna.bool(0) == false)
+assert(luna.bool(true) == true)
+assert(luna.bool(false) == false)
 
 os.exit(0)
