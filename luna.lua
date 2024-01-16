@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.0.0"}
+local luna = {_VERSION = "2.0.1"}
 
 luna.string = {}
 
@@ -69,9 +69,8 @@ function string.replace(s, pattern, replacement)
     assert(s ~= nil, "string.replace: s must not be nil")
     assert(pattern ~= nil, "string.replace: pattern must not be nil")
     assert(replacement ~= nil, "string.replace: replacement must not be nil")
-    local pattern = pattern:gsub("%%", "%%%%"):gsub("%z", "%%z"):gsub("([%^%$%(%)%.%[%]%*%+%-%?])",
-                                                                      "%%%1")
-    local replaced, _ = s:gsub(pattern, replacement)
+    local pattern = pattern:escapep()
+    local replaced, _ = s:gsub(pattern, replacement:escapep())
     return replaced
 end
 
@@ -518,11 +517,22 @@ function luna.file.tobytes(path)
 end
 
 --- Return a boolean from `v` if it is a boolean like value.
----@param v any
+---@param v string | boolean | number
 ---@return boolean
 function luna.bool(v)
     assert(v ~= nil, "bool: v must not be nil")
     return v == true or v == "true" or v == 1 or v == "1"
 end
+
+--- Return an integer from `v` if possible.
+---
+--- If `v` is not a number, it will return `fail`.
+---@param v string
+---@return integer
+function tointeger(v)
+    assert(v ~= nil, "int: v must not be nil")
+    return tonumber(v, 10)
+end
+luna.int = tointeger
 
 return luna
