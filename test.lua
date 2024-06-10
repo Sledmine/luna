@@ -148,6 +148,8 @@ assert(luna.file.frombytes("test/file.txt", {
     0x21
 }) == true)
 assert(luna.file.tobytes("test/file.txt")[1] == 0x6c)
+assert(luna.binary.read("test/file.txt") == "lua is awesome!")
+assert(luna.binary.write("test/file.txt", "lua is awesome!") == true)
 
 assert(luna.bool("true") == true)
 assert(luna.bool("false") == false)
