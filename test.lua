@@ -29,6 +29,13 @@ assert(split[5] == "o")
 s = "^[123]?%d %u%l+ %d%d%d%d%$"
 assert(s:escapep() == "%^%[123%]%?%%d %%u%%l%+ %%d%%d%%d%%d%%%$")
 
+s = "hello world"
+assert(s:count("l") == 3)
+s = "hello world hello world"
+assert(s:count("l") == 6)
+s = "hello\nworld\nhello\nworld\n"
+assert(s:count("\n") == 4)
+
 ---@type string[]
 local t = {"a", "b", "c"}
 
@@ -45,6 +52,7 @@ local found = table.find(t, function(v, k)
     return v == "b"
 end)
 assert(found ~= nil)
+assert(table.find(t, "b"))
 
 local keys = table.keys(t)
 assert(keys[1] == 1)
@@ -89,6 +97,13 @@ assert(merged["b"] == 2)
 assert(merged[1] == "test")
 assert(merged["deep"]["a"] == 1)
 
+local extended = table.extend(t, {"d", "e"})
+assert(extended[1] == "a")
+assert(extended[2] == "b")
+assert(extended[3] == "c")
+assert(extended[4] == "d")
+assert(extended[5] == "e")
+
 local reversed = table.reverse(t)
 assert(reversed[1] == "c")
 assert(reversed[2] == "b")
@@ -111,6 +126,11 @@ assert(chunks[3][2] == 8)
 assert(chunks[3][3] == 9)
 assert(chunks[4][1] == 10)
 assert(chunks[4][2] == nil)
+
+local count = table.count(t)
+assert(count == 3)
+count = table.count({"a", "b", "b", "c"}, "b")
+assert(count == 2)
 
 s = "hello world"
 local hex = s:tohex()
