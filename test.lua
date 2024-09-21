@@ -132,6 +132,11 @@ assert(count == 3)
 count = table.count({"a", "b", "b", "c"}, "b")
 assert(count == 2)
 
+local keyof = table.keyof(t, "b")
+assert(keyof == 2)
+local keyof = table.keyof({a = 1, b = 2, c = 3}, 2)
+assert(keyof == "b")
+
 s = "hello world"
 local hex = s:tohex()
 local unhex = hex:fromhex()

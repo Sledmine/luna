@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.2.1"}
+local luna = {_VERSION = "2.3.0"}
 
 luna.string = {}
 
@@ -187,6 +187,7 @@ luna.string.endswith = string.endswith
 luna.string.template = string.template
 luna.string.includes = string.includes
 luna.string.escapep = string.escapep
+luna.string.count = string.count
 
 luna.table = {}
 
@@ -460,7 +461,7 @@ end
 ---@generic T, V
 ---@param t T
 ---@param v? V
----@return unknown
+---@return number
 function table.count(t, v)
     assert(t ~= nil, "table.count: t must not be nil")
     assert(type(t) == "table" or type(t) == "userdata", "table.count: t must be a table")
@@ -474,7 +475,25 @@ function table.count(t, v)
             count = count + 1
         end
     end
-    return count    
+    return count
+end
+
+--- Return the key of a value in a table.
+--- If the value is not found, it will return `nil`.
+---@generic K, V
+---@param t table<K, V>
+---@param v V
+---@return K?
+---@nodiscard
+function table.keyof(t, v)
+    assert(t ~= nil, "table.keyof: t must not be nil")
+    assert(type(t) == "table" or type(t) == "userdata", "table.keyof: t must be a table")
+    ---@diagnostic disable-next-line: param-type-mismatch
+    for k, value in pairs(t) do
+        if value == v then
+            return k
+        end
+    end
 end
 
 luna.table.copy = table.copy
@@ -489,6 +508,8 @@ luna.table.merge = table.merge
 luna.table.reverse = table.reverse
 luna.table.slice = table.slice
 luna.table.chunks = table.chunks
+luna.table.count = table.count
+luna.table.keyof = table.keyof
 
 luna.file = {}
 
