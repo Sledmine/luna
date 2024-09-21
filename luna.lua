@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.3.0"}
+local luna = {_VERSION = "2.4.0"}
 
 luna.string = {}
 
@@ -494,6 +494,31 @@ function table.keyof(t, v)
             return k
         end
     end
+end
+
+--- Return a flattened table from a nested table.
+--- All nested tables will be flattened into a single table.
+--- If `t` is not a table, it will return `t`.
+--- If `t` is a table with no nested tables, it will return `t`.
+---@generic K, V
+---@param t table<K, V>
+---@return V[]
+---@nodiscard
+function table.flatten(t)
+    assert(t ~= nil, "table.flatten: t must not be nil")
+    assert(type(t) == "table" or type(t) == "userdata", "table.flatten: t must be a table")
+    local flattened = {}
+    ---@diagnostic disable-next-line: param-type-mismatch
+    for _, v in pairs(t) do
+        if type(v) == "table" then
+            for _, value in pairs(table.flatten(v)) do
+                flattened[#flattened + 1] = value
+            end
+        else
+            flattened[#flattened + 1] = v
+        end
+    end
+    return flattened
 end
 
 luna.table.copy = table.copy

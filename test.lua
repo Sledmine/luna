@@ -137,6 +137,16 @@ assert(keyof == 2)
 local keyof = table.keyof({a = 1, b = 2, c = 3}, 2)
 assert(keyof == "b")
 
+local flatten = table.flatten({1, 2, {3, 4}, {5, 6, {7, 8}}})
+assert(flatten[1] == 1)
+assert(flatten[2] == 2)
+assert(flatten[3] == 3)
+assert(flatten[4] == 4)
+assert(flatten[5] == 5)
+assert(flatten[6] == 6)
+assert(flatten[7] == 7)
+assert(flatten[8] == 8)
+
 s = "hello world"
 local hex = s:tohex()
 local unhex = hex:fromhex()
