@@ -535,6 +535,8 @@ luna.table.slice = table.slice
 luna.table.chunks = table.chunks
 luna.table.count = table.count
 luna.table.keyof = table.keyof
+luna.table.flatten = table.flatten
+luna.table.extend = table.extend
 
 luna.file = {}
 
