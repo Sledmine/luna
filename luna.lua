@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.4.0"}
+local luna = {_VERSION = "2.4.1"}
 
 luna.string = {}
 
@@ -383,16 +383,20 @@ end
 
 --- Returns a table with all values extended from all tables passed as arguments.
 ---@generic K, V
+---@param t table<K, V>
 ---@vararg table<K, V>
 ---@return V[]
 ---@nodiscard
-function table.extend(...)
-    local extended = {}
+function table.extend(t, ...)
+    assert(t ~= nil, "table.extend: t must not be nil")
+    assert(type(t) == "table" or type(t) == "userdata", "table.extend: t must be a table")
+    local extended = table.copy(t)
     for _, t in ipairs {...} do
         for _, v in pairs(t) do
             extended[#extended + 1] = v
         end
     end
+    ---@diagnostic disable-next-line: return-type-mismatch
     return extended
 end
 
