@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.4.1"}
+local luna = {_VERSION = "2.5.0"}
 
 luna.string = {}
 
@@ -400,6 +400,23 @@ function table.extend(t, ...)
     return extended
 end
 
+--- Append values to a table.
+--- It will append all given values to the end of the table.
+---@generic V
+---@param t V[]
+---@vararg V
+---@return V[]
+function table.append(t, ...)
+    assert(t ~= nil, "table.append: t must not be nil")
+    assert(type(t) == "table" or type(t) == "userdata", "table.append: t must be a table")
+    local appended = table.copy(t)
+    for _, v in ipairs {...} do
+        appended[#appended + 1] = v
+    end
+    ---@diagnostic disable-next-line: return-type-mismatch
+    return appended
+end
+
 --- Returns a table with all elements in reversed order.
 ---@generic T
 ---@param t T
@@ -541,6 +558,7 @@ luna.table.count = table.count
 luna.table.keyof = table.keyof
 luna.table.flatten = table.flatten
 luna.table.extend = table.extend
+luna.table.append = table.append
 
 luna.file = {}
 
@@ -680,6 +698,15 @@ end
 function luna.bool(v)
     assert(v ~= nil, "bool: v must not be nil")
     return v == true or v == "true" or v == 1 or v == "1"
+end
+
+--- Return a bit (number as 0 or 1) from `v` if it is a boolean like value.
+---@param v string | boolean | number
+---@return integer
+---@nodiscard
+function luna.bit(v)
+    assert(v ~= nil, "bit: v must not be nil")
+    return luna.bool(v) and 1 or 0
 end
 
 --- Return an integer from `v` if possible.
