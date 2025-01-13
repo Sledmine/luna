@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.5.0"}
+local luna = {_VERSION = "2.6.0"}
 
 luna.string = {}
 
@@ -690,6 +690,44 @@ function luna.binary.write(path, content)
         return true
     end
     return false
+end
+
+luna.url = {}
+
+--- Return a table with all query parameters from a URL.
+--- If the URL has no query parameters, it will return an empty table.
+---@param url string
+---@return {[string]: string}
+---@nodiscard
+function luna.url.params(url)
+    assert(url ~= nil, "url.query: url must not be nil")
+    local query = {}
+    for key, value in url:gmatch "([^&=?]-)=([^&=?]*)" do
+        query[key] = value
+    end
+    return query
+end
+
+--- Return a URL string with all characters encoded to be an RFC compatible URL.
+---@param s string
+---@return string
+---@nodiscard
+function luna.url.encode(s)
+    assert(s ~= nil, "url.encode: s must not be nil")
+    return (s:gsub("[^%w%-_%.~]", function(c)
+        return format("%%%02X", c:byte())
+    end))
+end
+
+--- Return a URL string with all encoded characters decoded.
+---@param s string
+---@return string
+---@nodiscard
+function luna.url.decode(s)
+    assert(s ~= nil, "url.decode: s must not be nil")
+    return (s:gsub("%%(%x%x)", function(hex)
+        return char(tonumber(hex, 16))
+    end))
 end
 
 --- Return a boolean from `v` if it is a boolean like value.

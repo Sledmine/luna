@@ -200,6 +200,12 @@ assert(luna.file.tobytes("test/file.txt")[1] == 0x6c)
 assert(luna.binary.read("test/file.txt") == "lua is awesome!")
 assert(luna.binary.write("test/file.txt", "lua is awesome!") == true)
 
+assert(luna.url.encode("hello world") == "hello%20world")
+assert(luna.url.decode("hello%20world") == "hello world")
+local params = luna.url.params("hello=world&foo=bar")
+assert(params["hello"] == "world")
+assert(params["foo"] == "bar")
+
 assert(luna.bool("true") == true)
 assert(luna.bool("false") == false)
 assert(luna.bool("1") == true)
