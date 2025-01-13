@@ -28,8 +28,9 @@ Luna follows a set of simple rules to make it easy to use and understand:
 - EmmyLua annotations
 - No side effects
 - No discard values
-- No globals
 - No monkey patching
 - No dependencies
-- No iterators
 - No meta tables
+
+Iterators will be avoided as much as possible, as with most of the functional programming style
+functions, they are not needed or not exactly considered "functional".
