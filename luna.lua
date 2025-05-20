@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.7.0"}
+local luna = {_VERSION = "2.7.1"}
 
 luna.string = {}
 
@@ -659,7 +659,9 @@ function luna.file.frombytes(path, bytes)
     assert(bytes ~= nil, "file.frombytes: bytes must not be nil")
     local file = io.open(path, "wb")
     if file then
-        file:write(char(unpack(bytes)))
+        for i = 1, #bytes do
+            file:write(char(bytes[i]))
+        end
         file:close()
         return true
     end
@@ -674,7 +676,11 @@ function luna.file.tobytes(path)
     assert(path ~= nil, "file.tobytes: path must not be nil")
     local file = io.open(path, "rb")
     if file then
-        local bytes = {string.byte(file:read "*a", 1, -1)}
+        local bytes = {}
+        local content = file:read "*a"
+        for i = 1, #content do
+            bytes[i] = content:byte(i)
+        end
         file:close()
         return bytes
     end
