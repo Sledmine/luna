@@ -236,4 +236,14 @@ assert(luna.math.round(32, 10) == 30)
 assert(luna.math.round(350, 100) == 400)
 assert(luna.math.round(320, 100) == 300)
 
+assert(luna.math.mod(10, 3) == 1)
+assert(luna.math.mod(10, 5) == 0)
+assert(luna.math.mod(10, 2) == 0)
+assert(luna.math.mod(7, 4) == 3)
+assert(luna.math.mod(-1, 3) == 2)
+assert(luna.math.mod(-4, 3) == 2)
+assert(luna.math.mod(-10, 5) == 0)
+assert(luna.math.mod(-10, 4) == 2)
+
+
 os.exit(0)
