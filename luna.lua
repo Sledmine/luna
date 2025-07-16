@@ -1,4 +1,4 @@
-local luna = {_VERSION = "2.8.0"}
+local luna = {_VERSION = "2.9.0"}
 
 luna.string = {}
 
@@ -751,6 +751,19 @@ function luna.url.params(url)
         query[key] = value
     end
     return query
+end
+
+--- Return a query string given a params table.
+---@param params {[string]: string}
+---@return string
+---@nodiscard
+function luna.url.query(params)
+    assert(params ~= nil, "url.query: params must not be nil")
+    local query = {}
+    for key, value in pairs(params) do
+        table.insert(query, key .. "=" .. value)
+    end
+    return table.concat(query, "&")
 end
 
 --- Return a URL string with all characters encoded to be an RFC compatible URL.

@@ -205,6 +205,8 @@ assert(luna.url.decode("hello%20world") == "hello world")
 local params = luna.url.params("hello=world&foo=bar")
 assert(params["hello"] == "world")
 assert(params["foo"] == "bar")
+local query = luna.url.query(params)
+assert(query == "hello=world&foo=bar" or query == "foo=bar&hello=world")
 
 assert(luna.bool("true") == true)
 assert(luna.bool("false") == false)
